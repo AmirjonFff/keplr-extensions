@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from "react";
+import { Link } from "react-router";
 
 export default function Phrase() {
     const [activeType, setActiveType] = useState("phrase-12");
@@ -35,7 +36,7 @@ export default function Phrase() {
             </div>
 
             <div className="container">
-                <a href="/login" className="back-btn">
+                <Link to="/login" className="back-btn">
                     <svg width="14" height="12" viewBox="0 0 14 12" fill="none">
                         <path
                             d="M12.625 6H1.375M1.375 6L6.4375 11.0625M1.375 6L6.4375 0.9375"
@@ -45,7 +46,7 @@ export default function Phrase() {
                             strokeLinejoin="round"
                         />
                     </svg>
-                </a>
+                </Link>
 
                 <div className="step">Step 1/3</div>
                 <h1 className="login__title">Import Existing Wallet</h1>

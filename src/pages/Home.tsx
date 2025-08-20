@@ -1,3 +1,4 @@
+import { Link } from 'react-router';
 import '../../public/assets/css/normalize.css'
 import '../../public/assets/css/style.css'
 import headerLogo from '../../public/assets/img/header-logo.svg';
@@ -26,15 +27,15 @@ const Home = () => {
                 </div>
 
                 <div className="home__btns">
-                    <a href="/login" className="btn btn--one">
+                    <Link to="/login" className="btn btn--one">
                         Create a new wallet
-                    </a>
-                    <a href="/login" className="btn btn--two">
+                    </Link>
+                    <Link to="/login" className="btn btn--two">
                         Import an existing wallet
-                    </a>
-                    <a href="/login" className="btn btn--three">
+                    </Link>
+                    <Link to="/login" className="btn btn--three">
                         Connect Hardware Wallet
-                    </a>
+                    </Link>
                 </div>
             </div>
         </div>
