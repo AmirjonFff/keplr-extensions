@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Phrase from "./pages/Phrase";
+import Phrase2 from "./pages/Phrase2";
 
 
 function App() {

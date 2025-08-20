@@ -27,7 +27,7 @@ export default function Login() {
 
                 <h1 className="welcome__title">Welcome Back to Keplr</h1>
                 <div className="welcome__desc">
-                    Glad you’re back! <img style={{ position: 'relative', top: '3px' }} src={handsIcon} alt="icon" />
+                    Glad you’re back! <img src={handsIcon} alt="icon" />
                 </div>
 
                 <div className="inner-container">
