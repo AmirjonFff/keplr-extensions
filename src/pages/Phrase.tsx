@@ -1,13 +1,13 @@
-import { useRef, useState, type FormEvent } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router";
 import { PhraseForm } from "../components/PhraseForm";
+import { KeyForm } from "../components/KeyForm";
 
 const tabData = [
     { type: "phrase-12", label: "12 word" },
     { type: "phrase-24", label: "24 word" },
     { type: "phrase-key", label: "Private key" },
 ]
-
 
 
 export default function Phrase() {
@@ -43,10 +43,7 @@ export default function Phrase() {
         setWords(newWords);
     };
 
-    const handleSubmit = (e: FormEvent) => {
-        e.preventDefault();
-        window.alert('Invalid private key\nPlease check your key and try again!');
-    };
+
 
     return (
         <div className="login">
@@ -110,12 +107,7 @@ export default function Phrase() {
                             onHdPathClick={() => setHdPathVisible(true)}
                         />
                     ) : (
-                        <form className="login__form" onSubmit={handleSubmit}>
-                            <input type="text" id="key" className="input" value={key} onChange={(e) => setKey(e.target.value)} />
-                            <button type="submit" className="login__submit-btn btn btn--one" disabled={!key}>
-                                Import
-                            </button>
-                        </form>
+                        <KeyForm keyValue={key} onChange={setKey} />
                     )}
                 </div>
             </div>
