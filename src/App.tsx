@@ -2,7 +2,10 @@ import { Routes, Route } from "react-router";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Phrase from "./pages/Phrase";
-import Phrase2 from "./pages/Phrase2";
+
+import '../public/assets/css/normalize.css';
+import '../public/assets/css/style.css';
+import '../public/assets/css/login.css';
 
 
 function App() {

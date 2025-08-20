@@ -1,19 +1,21 @@
+import { HdPathPopup } from "./HdPathPopup";
 import { WordField } from "./WordField";
 
 type PhraseFormProps = {
     wordCount: number;
     words: string[];
+    hdPathVisible: boolean;
+    setHdPathVisible: (visible: boolean) => void;
     onWordChange: (index: number, value: string) => void;
     onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>, index: number) => void;
     onPaste: (e: React.ClipboardEvent<HTMLInputElement>, index: number) => void;
-    inputsRef: React.MutableRefObject<Array<HTMLInputElement | null>>;
     onHdPathClick: () => void;
 };
 
-export function PhraseForm({ wordCount, words, onWordChange, onKeyDown, onPaste, inputsRef, onHdPathClick }: PhraseFormProps) {
+export function PhraseForm({ wordCount, words, onWordChange, onKeyDown, onPaste, hdPathVisible, setHdPathVisible }: PhraseFormProps) {
     return (
         <form className="login__form">
-            <div className="login__fields">
+            <div className={`login__fields ${wordCount === 24 ? 'login__fields-24' : ''}`}>
                 {Array.from({ length: wordCount }).map((_, i) => (
                     <WordField
                         key={i}
@@ -22,13 +24,14 @@ export function PhraseForm({ wordCount, words, onWordChange, onKeyDown, onPaste,
                         onChange={onWordChange}
                         onKeyDown={onKeyDown}
                         onPaste={onPaste}
-                        ref={(el) => (inputsRef.current[i] = el)}
                     />
                 ))}
             </div>
-            <button type="button" className="btn login__path-btn" onClick={onHdPathClick}>
+            {!hdPathVisible && <button type="button" className="btn login__path-btn" onClick={() => setHdPathVisible(true)}>
                 Set Derivation Path (Advanced)
-            </button>
+            </button>}
+            <HdPathPopup visible={hdPathVisible} onClose={() => setHdPathVisible(false)} />
+
             <button type="submit" className="login__submit-btn btn btn--one" disabled={!words.slice(0, wordCount).every(Boolean)}>
                 Import
             </button>

@@ -1,9 +1,7 @@
-import '../../public/assets/css/normalize.css';
-import '../../public/assets/css/style.css';
-import '../../public/assets/css/login.css';
-
 import handsIcon from '../../public/assets/img/hands-icon.png';
 import { Link } from 'react-router';
+import { google, upload } from '../components/SVG';
+import LoginItem from '../components/LoginItem';
 
 export default function Login() {
     return (
@@ -31,38 +29,21 @@ export default function Login() {
                 </div>
 
                 <div className="inner-container">
-                    <div className="column">
-                        <div className="welcome__column-title">Recovery Phrase or Private Key</div>
-                        <div className="welcome__column-desc">
-                            Use an existing 12/24 word recovery phrase or private key. You can also import wallets from other wallet providers.
-                        </div>
-                        <Link to="/phrase" className="btn btn--one welcome__column-btn">
-                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <g clipPath="url(#clip0_0_802)">
-                                    <path d="M1.5 8.25V9.375C1.5 9.9963 2.00368 10.5 2.625 10.5H9.375C9.9963 10.5 10.5 9.9963 10.5 9.375V8.25M8.25 6L6 8.25M6 8.25L3.75 6M6 8.25V1.5" stroke="white" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
-                                </g>
-                                <defs>
-                                    <clipPath id="clip0_0_802">
-                                        <rect width="12" height="12" fill="white" />
-                                    </clipPath>
-                                </defs>
-                            </svg>
-                            <span>Use recovery phrase or private key</span>
-                        </Link>
-                    </div>
+                    <LoginItem
+                        title='Recovery Phrase or Private Key'
+                        desc=' Use an existing 12/24 word recovery phrase or private key. You can also import wallets from other wallet providers.'
+                        svg={upload}
+                        btnTitle='Use recovery phrase or private key'
+                        btnNum='one'
+                    />
 
-                    <div className="column">
-                        <div className="welcome__column-title">Use Google</div>
-                        <div className="welcome__column-desc">
-                            Log in with the same email address to import an existing account to Keplr.
-                        </div>
-                        <Link to="/phrase" className="btn btn--two welcome__column-btn">
-                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M14.8898 7.90785H9.1221V10.2297H12.4171C12.275 10.9802 11.8439 11.6149 11.1942 12.0403C10.6451 12.3999 9.94425 12.6125 9.12052 12.6125C7.52572 12.6125 6.1768 11.5571 5.69469 10.139C5.57337 9.7794 5.50313 9.3948 5.50313 8.99925C5.50313 8.60362 5.57337 8.21903 5.69469 7.8594C6.17839 6.44287 7.52737 5.38749 9.1221 5.38749C10.0209 5.38749 10.8271 5.69081 11.4624 6.28495L13.2184 4.56352C12.1568 3.59414 10.7728 3 9.1221 3C6.72915 3 4.65864 4.34462 3.65132 6.30528C3.23627 7.11518 3 8.03138 3 9.00075C3 9.9702 3.23627 10.8848 3.65132 11.6947C4.65864 13.6554 6.72915 15 9.1221 15C10.776 15 12.1616 14.4622 13.1737 13.5459C14.3312 12.5015 15 10.963 15 9.13522C15 8.70997 14.9617 8.3019 14.8898 7.90785Z" fill="white" />
-                            </svg>
-                            <span>Connect with Google</span>
-                        </Link>
-                    </div>
+                    <LoginItem
+                        title='Use Google'
+                        desc=' Log in with the same email address to import an existing account to Keplr.'
+                        svg={google}
+                        btnTitle='Connect with Google'
+                        btnNum='two'
+                    />
                 </div>
             </div>
         </div>
